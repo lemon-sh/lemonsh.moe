@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="title-header-outer">
+    <div class="title-header-inner">
+        <h1>{{ section.title }}</h1>
+    </div>
+</div>
+<h2>{{ section.description }}</h2>
+<ul>
+    {% for cpage in paginator.pages %}
+    <li><a href="{{ cpage.permalink }}">{{ cpage.date }} | {{ cpage.title }}</a></li>
+    {% endfor %}
+</ul>
+<nav style="text-align: center">
+    <a href="{{ paginator.first }}">&lt;&lt;</a>
+    {% if paginator.previous %}
+    <a href="{{ paginator.previous }}">&lt;</a>
+    {% else %}
+    <a style="color: #aaaaaa">&lt;</a>
+    {% endif %}
+    {{ paginator.current_index }}
+    {% if paginator.next %}
+    <a href="{{ paginator.next }}">&gt;</a>
+    {% else %}
+    <a style="color: #aaaaaa">&gt;</a>
+    {% endif %}
+    <a href="{{ paginator.last }}">&gt;&gt;</a>
+</nav>
+{% endblock content %}

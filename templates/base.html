@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Lemon's We(e)bsite</title>
+    <link href="/main.css" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+</head>
+
+<body>
+    {% block content %} {% endblock %}
+    <hr>
+    <p style="margin: 0" class="navbar">|
+        {% for navitem in config.extra.nav %}
+        {% if section and section.path == navitem.path %}
+        <span style="color: #ccc; text-decoration: underline">{{ navitem.label }}</span>
+        {% else %}
+        <a href="{{ navitem.path }}">{{ navitem.label }}</a>
+        {% endif %}
+        |
+        {% endfor %}
+        by ./lemon.sh
+    </p>
+</body>
+
+</html>
