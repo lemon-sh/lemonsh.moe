@@ -9,8 +9,7 @@ Welcome to my work-in-progress personal website.
 *E-mail me if you can't access this website from a text web browser like lynx.*
 
 ## Stuff
-* E-mail: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
-* XMPP: [lemon@famfo.xyz](xmpp:lemon@famfo.xyz)
+* E-mail & XMPP: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
 * Git: [@lemonsh](https://git.karx.xyz/lemonsh) on *git.karx.xyz*
 
 ## Friends' websites
