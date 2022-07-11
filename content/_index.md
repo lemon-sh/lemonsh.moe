@@ -1,6 +1,7 @@
 +++
 title = "Welcome to my website!"
 description = "lemonsh.moe"
+template = "page.html"
 +++
 
 Hello there!
@@ -9,7 +10,8 @@ Welcome to my work-in-progress personal website.
 *E-mail me if you can't access this website from a text web browser like lynx.*
 
 ## Stuff
-* E-mail & XMPP: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
+* E-mail: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
+* XMPP: [lemon@lemonsh.moe](xmpp:lemon@lemonsh.moe)
 * Git: [@lemonsh](https://git.karx.xyz/lemonsh) on *git.karx.xyz*
 
 ## Friends' websites

@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="title-header-outer">
-    <div class="title-header-inner">
-        <h1>{{ section.title }}</h1>
-    </div>
-</div>
+
 <h2>{{ section.description }}</h2>
 <ul>
     {% for cpage in paginator.pages %}

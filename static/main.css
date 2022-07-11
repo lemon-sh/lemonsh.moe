@@ -78,6 +78,43 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* misc */
+
+li {
+    list-style-type: circle;
+    margin-bottom: 0.6em;
+    line-height: 1.2em;
+}
+
+hr {
+    background-color: hsl(0, 0%, 25%);
+    height: 2px;
+    border: 0;
+}
+
+h3 {
+    text-indent: 1em;
+}
+
+p {
+    line-height: 1.3em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+body {
+    margin: 0 auto 2em auto;
+    max-width: 60em;
+    font-size: 15px;
+    letter-spacing: -0.05em;
+    font-family: "JetBrains Mono", monospace;
+    color: hsl(0, 0%, 90%);
+    padding: 0 5vw;
+    background: hsl(0, 0%, 6%);
+}
+
+/* title header */
+
 .title-header-outer {
     text-align: center;
     margin: 2em 0;
@@ -96,30 +133,7 @@
     text-align: right;
 }
 
-h3 {
-    text-indent: 1em;
-}
-
-p {
-    line-height: 1.3em;
-    text-align: justify;
-    text-justify: inter-word;
-}
-
-.navbar {
-    text-align: left;
-}
-
-body {
-    margin: 0 auto 2em auto;
-    max-width: 60em;
-    font-size: 15px;
-    letter-spacing: -0.05em;
-    font-family: "JetBrains Mono", monospace;
-    color: #e7e7e7;
-    padding: 0 5vw;
-    background: #0f0f0f;
-}
+/* codeblocks */
 
 pre {
     font-size: 0.9em;
@@ -131,7 +145,7 @@ pre {
 
 pre::-webkit-scrollbar {
     background: transparent;
-    height: 0.7em;
+    height: 0.5em;
 }
 
 pre::-webkit-scrollbar-thumb {
@@ -140,16 +154,25 @@ pre::-webkit-scrollbar-thumb {
 }
 
 pre::-webkit-scrollbar-thumb:hover {
-    background: #5b5d60;
+    background: #b1ff62;
 }
 
 pre::-webkit-scrollbar-thumb:active {
-    background: #393b3f;
+    background: #ff7d6a;
 }
 
 code {
     font-family: "JetBrains Mono", monospace;
 }
+
+/* footer */
+
+.footer {
+    display: block;
+    text-align: center;
+}
+
+/* links */
 
 a:link,
 a:active,
@@ -163,17 +186,7 @@ a:hover {
     text-decoration: none;
 }
 
-li {
-    list-style-type: circle;
-    margin-bottom: 0.6em;
-    line-height: 1.2em;
-}
-
-hr {
-    background-color: #aaaaaa;
-    height: 2px;
-    border: 0;
-}
+/* tables */
 
 table {
     border-collapse: collapse;
@@ -187,6 +200,8 @@ td {
     border: 1px solid white;
     padding: 0.4em;
 }
+
+/* images */
 
 figure {
     display: block;

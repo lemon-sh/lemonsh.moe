@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="title-header-outer">
-    <div class="title-header-inner">
-        <h1>{{ section.title }}</h1>
-    </div>
-</div>
+
 <ul>
     {% for subsection in section.subsections %}
     {% set csection = get_section(path=subsection) %}
