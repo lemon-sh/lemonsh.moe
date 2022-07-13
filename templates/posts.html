@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+{{ section.content | safe }}
 <h2>{{ section.description }}</h2>
 <ul>
     {% for cpage in paginator.pages %}

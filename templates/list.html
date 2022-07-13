@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+{{ section.content | safe }}
 <ul>
     {% for subsection in section.subsections %}
     {% set csection = get_section(path=subsection) %}
