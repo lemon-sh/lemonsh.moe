@@ -10,12 +10,12 @@ opwd="$PWD"
 zola build
 
 gx checking out \'gh-pages\' branch to /tmp...
-rm -rf /tmp/lemondeploy
 git worktree add /tmp/lemondeploy gh-pages
 
 gx copying website to \'gh-pages\' branch...
 cd /tmp/lemondeploy
 git checkout --orphan tmp-gh-pages
+rm -rf *
 mv "$opwd"/public/* .
 
 gx pushing \'gh-pages\'...
