@@ -15,16 +15,21 @@ git worktree add /tmp/lemondeploy gh-pages
 
 gx copying website to \'gh-pages\' branch...
 cd /tmp/lemondeploy
-rm -rf *
-mv "$opwd/public/*" .
+git checkout --orphan tmp-gh-pages
+mv "$opwd"/public/* .
 
 gx pushing \'gh-pages\'...
-git add .
-git commit -m "deploy $(date '+%Y%M%d %H%M%S')"
-git push origin gh-pages
+git add -A
+git commit -m "deploy github pages"
+git branch -D gh-pages
+git branch -m gh-pages
+git push -f origin gh-pages
 
 gx removing local \'gh-pages\' copy...
 cd $opwd
 git worktree remove /tmp/lemondeploy
+
+gx pushing \'master\'...
+git push origin master
 
 gx done!
