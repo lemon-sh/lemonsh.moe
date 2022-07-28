@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>[PL] Własny Amazon S3 na Mikrusie? ~ lemonsh's website</title>
+    <link href="/main.css" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://lemonsh.moe/rss.xml">
+</head>
+
+<body>
+    <a id="top"></a>
+    <div class="title-header-outer">
+        <div class="title-header-inner">
+            
+                <h1>[PL] Własny Amazon S3 na Mikrusie?</h1>
+                
+                    <p>2022-01-08</p>
+                
+            
+        </div>
+    </div>
+    <p>/
+        
+            <a href="&#x2F;">home</a>
+        /
+    
+        
+            <a href="&#x2F;blog&#x2F;">blog</a>
+        /
+    
+    </p>
+    <hr>    
+    
+
+
+<p><em>This article is written in Polish, for the <a rel="noopener noreferrer" target="_blank" href="https://mikr.us">Mikrus</a> project.</em></p>
+<h1 id="czym-jest-minio">Czym jest MinIO?</h1>
+<p><em><strong>MinIO</strong></em> to napisany w Go otwartoźródłowy serwer <em>object storage</em> kompatybilny z <strong>Amazon S3</strong>. Posiada bardzo duże możliwości konfiguracji, a jego instalacja jest dość prosta.</p>
+<p>W tym poście, chciałbym opisać jego instalację na <a rel="noopener noreferrer" target="_blank" href="https://mikr.us">Mikrusie</a></p>
+<span id="continue-reading"></span><h1 id="instalacja">Instalacja</h1>
+<p>Instalację przeprowadzimy na następującej konfiguracji:</p>
+<ul>
+<li><em>Mikrus</em>, najlepiej 2.0 lub 3.0</li>
+<li><em>Alpine Linux</em> - bardzo lekka, szybka i nieskomplikowana w budowie dystrybucja Linuxa</li>
+<li><em>Mikrusowy Storage</em> - <em>Mikrusy</em> nie mają zbyt dużo &quot;własnego&quot; dysku, a zdalny storage odpada ze względu na charakter usługi jaką jest S3</li>
+<li><em>Własna domena</em> - potrzebna do SSL, a mikrusowa subdomena się nie nada ze względu na ograniczenia Cloudflare co do rozmiaru zapytania HTTP</li>
+</ul>
+<h2 id="porty-uzyte-w-poradniku">Porty użyte w poradniku</h2>
+<p>Ta lista powinna pomóc ci uzupełnić pliki konfiguracyjne odpowiednimi portami</p>
+<ul>
+<li><strong>9000</strong> - domyślny, <em>wewnętrzny</em> port MinIO</li>
+<li><strong>9001</strong> - domyślny, <em>wewnętrzny</em> port MinIO Console</li>
+<li><strong>12345</strong> - <em>zewnętrzny</em> port z <a rel="noopener noreferrer" target="_blank" href="https://mikr.us/panel?a=ports">panelu Mikrusa</a></li>
+</ul>
+<h2 id="rekordy-dns">Rekordy DNS</h2>
+<p>Stwórz dwa rekordy:</p>
+<table><thead><tr>
+    <td>Typ</td><td>Nazwa</td><td>Adres</td>
+</thead><tbody></tr><tr>
+    <td>CNAME</td><td>minio</td><td>srvXX.mikr.us</td>
+</tr><tr>
+    <td>CNAME</td><td>console.minio</td><td>srvXX.mikr.us</td>
+</tr></tbody></table>
+<p>Zamień <em>srvXX</em> na adres serwera twojego Mikrusa (np. srv08.mikr.us).
+Będziesz musiał ogarnąć też certyfikat SSL dla tych dwóch rekordów i umieścić go w <em>/etc/ssl/minio/</em> (patrz. <em>Konfiguracja reverse proxy</em>);</p>
+<hr />
+<p>MinIO jest dostępny jako pakiet Alpine, lecz użyjemy binarki, gdyż po pierwsze, jest to najnowsza wersja (a MinIO jest <em>bardzo</em> często aktualizowany), a po drugie, taki sposób instalacji zaleca producent.</p>
+<p>W tym celu, wykonaj następujące polecenia <strong>jako root</strong>:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#e9fdac;">apk</span><span> add curl
+</span><span style="color:#e9fdac;">curl</span><span> https://dl.min.io/server/minio/release/linux-amd64/minio</span><span style="font-style:italic;color:#fc9354;"> -o</span><span> /usr/bin/minio
+</span><span style="color:#e9fdac;">chmod</span><span> +x /usr/bin/minio
+</span><span style="color:#e9fdac;">addgroup</span><span style="font-style:italic;color:#fc9354;"> -S</span><span> minio
+</span><span style="color:#e9fdac;">adduser</span><span style="font-style:italic;color:#fc9354;"> -S -D -h</span><span> /var/lib/minio</span><span style="font-style:italic;color:#fc9354;"> -s</span><span> /sbin/nologin</span><span style="font-style:italic;color:#fc9354;"> -G</span><span> minio</span><span style="font-style:italic;color:#fc9354;"> -g</span><span> minio minio
+</span></code></pre>
+<p>MinIO nie posiada własnego skryptu OpenRC, więc napisałem swój. Umieść go w <em>/etc/init.d/minio</em>:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#6d6d6d;">#!/sbin/openrc-run
+</span><span style="color:#e9fdac;">name</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">MinIO Server</span><span style="color:#ffffff;">&#39;
+</span><span style="color:#e9fdac;">command</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">/usr/bin/minio
+</span><span style="color:#e9fdac;">command_args</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">server --address </span><span style="color:#ffffff;">$</span><span style="color:#e9fdac;">MINIO_ADDR</span><span style="color:#fbe3bf;"> --console-address </span><span style="color:#ffffff;">$</span><span style="color:#e9fdac;">MINIO_CONSOLE_ADDR </span><span style="color:#ffffff;">$</span><span style="color:#e9fdac;">MINIO_VOLUME</span><span style="color:#ffffff;">&quot;
+</span><span style="color:#e9fdac;">command_user</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">minio:minio</span><span style="color:#ffffff;">&quot;
+</span><span style="color:#e9fdac;">command_background</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">true
+</span><span style="color:#e9fdac;">pidfile</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">/run/</span><span style="color:#ffffff;">$</span><span style="color:#fbe3bf;">{</span><span style="color:#e9fdac;">RC_SVCNAME</span><span style="color:#fbe3bf;">}.pid</span><span style="color:#ffffff;">&quot;
+</span><span style="color:#e9fdac;">output_log</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">/var/log/</span><span style="color:#ffffff;">$</span><span style="color:#fbe3bf;">{</span><span style="color:#e9fdac;">RC_SVCNAME</span><span style="color:#fbe3bf;">}.log</span><span style="color:#ffffff;">&quot;
+</span><span>
+</span><span style="color:#8cdaff;">depend</span><span>() {
+</span><span>    </span><span style="color:#e9fdac;">need</span><span> net
+</span><span>    </span><span style="color:#e9fdac;">use</span><span> logger
+</span><span>}
+</span><span>
+</span><span style="color:#8cdaff;">start_pre</span><span>() {
+</span><span>    </span><span style="color:#e9fdac;">checkpath</span><span style="font-style:italic;color:#fc9354;"> --file --mode</span><span> 0600</span><span style="font-style:italic;color:#fc9354;"> --owner</span><span> root:root </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">/etc/conf.d/</span><span style="color:#ffffff;">$</span><span style="color:#fbe3bf;">{</span><span style="color:#e9fdac;">RC_SVCNAME</span><span style="color:#fbe3bf;">}</span><span style="color:#ffffff;">&quot;
+</span><span>    </span><span style="color:#e9fdac;">checkpath</span><span style="font-style:italic;color:#fc9354;"> --file --mode</span><span> 0644</span><span style="font-style:italic;color:#fc9354;"> --owner</span><span> minio:minio </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">/var/log/</span><span style="color:#ffffff;">$</span><span style="color:#fbe3bf;">{</span><span style="color:#e9fdac;">RC_SVCNAME</span><span style="color:#fbe3bf;">}.log</span><span style="color:#ffffff;">&quot;
+</span><span>    </span><span style="color:#e9fdac;">checkpath</span><span style="font-style:italic;color:#fc9354;"> --directory --mode</span><span> 0700</span><span style="font-style:italic;color:#fc9354;"> --owner</span><span> minio:minio </span><span style="color:#ffffff;">&quot;$</span><span style="color:#e9fdac;">MINIO_VOLUME</span><span style="color:#ffffff;">&quot;
+</span><span>}
+</span></code></pre>
+<p>Nie zapomnij ustawić uprawnień wykonywania:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#e9fdac;">chmod</span><span> +x /etc/init.d/minio
+</span></code></pre>
+<h2 id="konfiguracja-serwera-minio">Konfiguracja serwera MinIO</h2>
+<p><strong>Ważne:</strong> Upewnij się, że twój Mikrusowy storage jest zamontowany jako <em>/storage</em>.</p>
+<p>Stwórz plik <em>/etc/conf.d/minio</em> (jako root) i umieść w nim następującą zawartość:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#6d6d6d;"># ścieżka do całego &quot;środowiska&quot; S3
+</span><span style="color:#e9fdac;">MINIO_VOLUME</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">/storage/S3</span><span style="color:#ffffff;">&quot;
+</span><span>
+</span><span style="color:#6d6d6d;"># nazwa użytkownika administratora
+</span><span style="color:#ff5e5e;">export </span><span style="color:#e9fdac;">MINIO_ROOT_USER</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">lemonsh
+</span><span style="color:#6d6d6d;"># hasło administratora
+</span><span style="color:#ff5e5e;">export </span><span style="color:#e9fdac;">MINIO_ROOT_PASSWORD</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">WysmieniteHaslo
+</span><span>
+</span><span style="color:#6d6d6d;"># porty TCP, zmień jeśli potrzebujesz
+</span><span style="color:#e9fdac;">MINIO_ADDR</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">:9000 </span><span style="color:#6d6d6d;"># główny port
+</span><span style="color:#e9fdac;">MINIO_CONSOLE_ADDR</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">:9001 </span><span style="color:#6d6d6d;"># MinIO Console
+</span><span>
+</span><span style="color:#6d6d6d;"># ustaw tutaj adres za pomocą którego można dostać się do MinIO Console z zewnątrz
+</span><span style="color:#ff5e5e;">export </span><span style="color:#e9fdac;">MINIO_BROWSER_REDIRECT_URL</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">https://console.minio.example.com:12345
+</span><span>
+</span><span style="color:#6d6d6d;"># nie powinieneś/aś musieć tego zmieniać
+</span><span style="color:#ff5e5e;">export </span><span style="color:#e9fdac;">MINIO_SERVER_URL</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">http://127.0.0.1</span><span style="color:#ffffff;">$</span><span style="color:#e9fdac;">MINIO_ADDR
+</span></code></pre>
+<p>Zmień odpowiednie wartości zgodnie z ich opisem w komentarzach.</p>
+<h2 id="konfiguracja-reverse-proxy">Konfiguracja reverse proxy</h2>
+<p>MinIO posiada swój własny webowy panel kontrolny zwany MinIO Console, który wystawiony jest przez port <em>inny</em> od głównego.
+Zatem, MinIO w zasadzie wystawia dwie osobne usługi HTTP na osobnych portach. Aby wystawić je do internetu, możemy użyć <em>nginx</em>.</p>
+<p>Nie będę tutaj opisywał całej konfiguracji samego nginxa, a jedynie samą część configu która będzie ci potrzebna:</p>
+<pre data-lang="conf" style="background-color:#191919;color:#f8f8f2;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#fbdfb5;">server </span><span>{
+</span><span>    </span><span style="color:#6d6d6d;"># zamień 12345 na port zewnętrzny (patrz &quot;Porty użyte w poradniku&quot;)
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">listen </span><span style="color:#fdb082;">12345</span><span> ssl; 
+</span><span>    </span><span style="color:#6d6d6d;"># zamień example.com na swoją domenę
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">server_name </span><span>minio</span><span style="color:#ff5e5e;">.</span><span>example</span><span style="color:#ff5e5e;">.</span><span>com;
+</span><span>    
+</span><span>    </span><span style="color:#6d6d6d;"># ustaw tutaj ścieżki do certyfikatu SSL
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">ssl_certificate </span><span style="color:#ff5e5e;">/</span><span>etc</span><span style="color:#ff5e5e;">/</span><span>ssl</span><span style="color:#ff5e5e;">/</span><span>minio</span><span style="color:#ff5e5e;">/</span><span>public</span><span style="color:#ff5e5e;">.</span><span>crt;
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">ssl_certificate_key </span><span style="color:#ff5e5e;">/</span><span>etc</span><span style="color:#ff5e5e;">/</span><span>ssl</span><span style="color:#ff5e5e;">/</span><span>minio</span><span style="color:#ff5e5e;">/</span><span>private</span><span style="color:#ff5e5e;">.</span><span>key;
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;"># opcjonalnie, tu możesz ustawić maksymalny rozmiar pliku, np. 100m
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">client_max_body_size </span><span style="color:#fdb082;">0</span><span>;
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">ignore_invalid_headers </span><span style="color:#ff8942;">off</span><span>;
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">proxy_buffering </span><span style="color:#ff8942;">off</span><span>;
+</span><span>
+</span><span style="color:#ff5e5e;">    location /</span><span> {
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span style="color:#ecfdb9;">X</span><span style="color:#ff5e5e;">-</span><span>Real</span><span style="color:#ff5e5e;">-</span><span style="color:#ecfdb9;">IP </span><span style="color:#ff5e5e;">$remote_addr</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span style="color:#ecfdb9;">X</span><span style="color:#ff5e5e;">-</span><span>Forwarded</span><span style="color:#ff5e5e;">-</span><span>For </span><span style="color:#ff5e5e;">$proxy_add_x_forwarded_for</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span style="color:#ecfdb9;">X</span><span style="color:#ff5e5e;">-</span><span>Forwarded</span><span style="color:#ff5e5e;">-</span><span>Proto </span><span style="color:#ff5e5e;">$scheme</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span>Host </span><span style="color:#ff5e5e;">$http_host</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_connect_timeout </span><span style="color:#fdb082;">300</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_http_version </span><span style="color:#fdb082;">1</span><span style="color:#ff5e5e;">.</span><span style="color:#fdb082;">1</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span>Connection </span><span style="color:#fbe3bf;">&quot;&quot;</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">chunked_transfer_encoding </span><span style="color:#ff8942;">off</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_pass </span><span style="color:#fdb082;">http://127.0.0.1:9000</span><span>; </span><span style="color:#6d6d6d;"># zmień 9000 na port *główny* (jeśli się różni)
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">server </span><span>{
+</span><span>    </span><span style="color:#6d6d6d;"># zamień 12345 na port zewnętrzny (patrz &quot;Porty użyte w poradniku&quot;)
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">listen </span><span style="color:#fdb082;">12345</span><span> ssl; 
+</span><span>    </span><span style="color:#6d6d6d;"># zamień example.com na swoją domenę
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">server_name </span><span>console</span><span style="color:#ff5e5e;">.</span><span>minio</span><span style="color:#ff5e5e;">.</span><span>example</span><span style="color:#ff5e5e;">.</span><span>com;
+</span><span>    
+</span><span>    </span><span style="color:#6d6d6d;"># ustaw tutaj ścieżki do certyfikatu SSL
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">ssl_certificate </span><span style="color:#ff5e5e;">/</span><span>etc</span><span style="color:#ff5e5e;">/</span><span>ssl</span><span style="color:#ff5e5e;">/</span><span>minio</span><span style="color:#ff5e5e;">/</span><span>public</span><span style="color:#ff5e5e;">.</span><span>crt;
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">ssl_certificate_key </span><span style="color:#ff5e5e;">/</span><span>etc</span><span style="color:#ff5e5e;">/</span><span>ssl</span><span style="color:#ff5e5e;">/</span><span>minio</span><span style="color:#ff5e5e;">/</span><span>private</span><span style="color:#ff5e5e;">.</span><span>key;
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;"># opcjonalnie, tu możesz ustawić maksymalny rozmiar pliku, np. 100m
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">client_max_body_size </span><span style="color:#fdb082;">0</span><span>;
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">ignore_invalid_headers </span><span style="color:#ff8942;">off</span><span>;
+</span><span>    </span><span style="font-style:italic;color:#fc9354;">proxy_buffering </span><span style="color:#ff8942;">off</span><span>;
+</span><span>
+</span><span style="color:#ff5e5e;">    location /</span><span> {
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span style="color:#ecfdb9;">X</span><span style="color:#ff5e5e;">-</span><span>Real</span><span style="color:#ff5e5e;">-</span><span style="color:#ecfdb9;">IP </span><span style="color:#ff5e5e;">$remote_addr</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span style="color:#ecfdb9;">X</span><span style="color:#ff5e5e;">-</span><span>Forwarded</span><span style="color:#ff5e5e;">-</span><span>For </span><span style="color:#ff5e5e;">$proxy_add_x_forwarded_for</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span style="color:#ecfdb9;">X</span><span style="color:#ff5e5e;">-</span><span>Forwarded</span><span style="color:#ff5e5e;">-</span><span>Proto </span><span style="color:#ff5e5e;">$scheme</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span>Host </span><span style="color:#ff5e5e;">$http_host</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_connect_timeout </span><span style="color:#fdb082;">300</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_http_version </span><span style="color:#fdb082;">1</span><span style="color:#ff5e5e;">.</span><span style="color:#fdb082;">1</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_set_header </span><span>Connection </span><span style="color:#fbe3bf;">&quot;&quot;</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">chunked_transfer_encoding </span><span style="color:#ff8942;">off</span><span>;
+</span><span>
+</span><span>        </span><span style="font-style:italic;color:#fc9354;">proxy_pass </span><span style="color:#fdb082;">http://127.0.0.1:9001</span><span>; </span><span style="color:#6d6d6d;"># zmień 9001 na port *konsoli* (jeśli się różni)
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Zmień odpowiednie wartości zgodnie z ich opisem w komentarzach.</p>
+<p>Nie zapomnij zrestartować nginxa:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#e9fdac;">service</span><span> nginx restart
+</span></code></pre>
+<h1 id="e-dziala-to">E, działa to?</h1>
+<p>Upewnij się, że konfiguracja jest prawidłowa i uruchom MinIO:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#e9fdac;">service</span><span> minio start
+</span></code></pre>
+<p>Jeśli nie pojawią się żadne błędy, wejdź na adres <em>https://console.minio.twojadomena.pl:12345</em>.
+Jeśli instalacja przebiegła bezbłędnie, powinieneś zobaczyć interfejs logowania do MinIO Console.
+Użyj wcześniej ustalonych poświadczeń (<em>Konfiguracja serwera MinIO</em>).</p>
+<p>Działa?</p>
+<ul>
+<li>Jeśli tak, gratulacje!</li>
+<li>Jeśli nie, jak coś logi są w <em>/var/log/minio.log</em>, powodzenia!</li>
+</ul>
+
+<script src="https://giscus.app/client.js" data-repo="lemon-sh/lemonsh.moe" data-repo-id="R_kgDOGenHOg" data-category="Posts" data-category-id="DIC_kwDOGenHOs4CBSqT" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="transparent_dark" data-lang="en" crossorigin="anonymous" async>
+</script>
+
+
+    <hr>
+    <a href="#top" class="footer">↑ top ↑</a>
+</body>
+
+</html>

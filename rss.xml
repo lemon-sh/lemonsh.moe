@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title></title>
+        <link>https://lemonsh.moe</link>
+        <description></description>
+        <generator>Zola</generator>
+        <language>en</language>
+        <atom:link href="https://lemonsh.moe/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Sat, 08 Jan 2022 00:00:00 +0000</lastBuildDate>
+        <item>
+            <title>[PL] Własny Amazon S3 na Mikrusie?</title>
+            <pubDate>Sat, 08 Jan 2022 00:00:00 +0000</pubDate>
+            <link>https://lemonsh.moe/blog/minio/</link>
+            <guid>https://lemonsh.moe/blog/minio/</guid>
+            <description>&lt;p&gt;&lt;em&gt;This article is written in Polish, for the &lt;a rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;mikr.us&quot;&gt;Mikrus&lt;&#x2F;a&gt; project.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;czym-jest-minio&quot;&gt;Czym jest MinIO?&lt;&#x2F;h1&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;MinIO&lt;&#x2F;strong&gt;&lt;&#x2F;em&gt; to napisany w Go otwartoźródłowy serwer &lt;em&gt;object storage&lt;&#x2F;em&gt; kompatybilny z &lt;strong&gt;Amazon S3&lt;&#x2F;strong&gt;. Posiada bardzo duże możliwości konfiguracji, a jego instalacja jest dość prosta.&lt;&#x2F;p&gt;
+&lt;p&gt;W tym poście, chciałbym opisać jego instalację na &lt;a rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;mikr.us&quot;&gt;Mikrusie&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+        </item>
+    </channel>
+</rss>
