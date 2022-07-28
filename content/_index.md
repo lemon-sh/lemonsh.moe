@@ -12,7 +12,7 @@ Welcome to my work-in-progress personal website.
 ## Stuff
 * E-mail: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
 * XMPP: [lemon@lemonsh.moe](xmpp:lemon@lemonsh.moe)
-* Git: [@lemonsh](https://git.karx.xyz/lemonsh) on *git.karx.xyz*
+* Code: [@lemon](https://git.lemonsh.moe/lemon) at [git.lemonsh.moe](https://git.lemonsh.moe)
 
 ## Friends' websites
 * [famfo](https://famfo.xyz)
@@ -20,7 +20,7 @@ Welcome to my work-in-progress personal website.
 * [ferexio](https://fx.vc-mp.eu)
 
 <figure>
-    <img src="/okayucat.png" class="inlineimg">
+    <img src="/okayucat.png" alt="okayu">
     <figcaption>
         <a href="https://twitter.com/kinka0703/status/1236537300693028866">src</a>
     </figcaption>

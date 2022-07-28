@@ -7,7 +7,7 @@ date=2022-01-08
 ***MinIO*** to napisany w Go otwartoźródłowy serwer *object storage* kompatybilny z **Amazon S3**. Posiada bardzo duże możliwości konfiguracji, a jego instalacja jest dość prosta.
 
 W tym poście, chciałbym opisać jego instalację na [Mikrusie](https://mikr.us)
-
+<!-- more -->
 # Instalacja
 Instalację przeprowadzimy na następującej konfiguracji:
 * *Mikrus*, najlepiej 2.0 lub 3.0
