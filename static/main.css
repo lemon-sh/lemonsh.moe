@@ -110,7 +110,8 @@ body {
     font-family: "JetBrains Mono", monospace;
     color: hsl(0, 0%, 90%);
     padding: 0 5vw;
-    background: hsl(0, 0%, 6%);
+    background: hsl(0, 0%, 6%) url("/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* title header */

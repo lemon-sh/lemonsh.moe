@@ -27,3 +27,5 @@ Welcome to my work-in-progress personal website.
 </figure>
 
 This website was made with the [Zola](https://getzola.org) SSG and the source code is available [here](https://github.com/lemon-sh/lemonsh.moe).
+
+Background image by [@eberhardgross](https://www.pexels.com/@eberhardgross/) on Pexels. Please check him out!
