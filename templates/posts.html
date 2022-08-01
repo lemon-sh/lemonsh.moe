@@ -3,11 +3,14 @@
 {% block content %}
 {{ section.content | safe }}
 <h2>{{ section.description }}</h2>
-<ul>
+<table class="etbl">
     {% for cpage in paginator.pages %}
-    <li><a href="{{ cpage.permalink }}">{{ cpage.date }} | {{ cpage.title }}</a></li>
+    <tr>
+        <td>{{ cpage.date }}</td>
+        <td><a href="{{ cpage.permalink }}">{{ cpage.title }}</a></td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
 <nav style="text-align: center">
     <a href="{{ paginator.first }}">&lt;&lt;</a>
     {% if paginator.previous %}
