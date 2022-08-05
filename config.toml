@@ -3,6 +3,8 @@ compile_sass = false
 build_search_index = false
 generate_feed = true
 feed_filename = "rss.xml"
+feed_limit = 20
+minify_html = true
 
 [markdown]
 highlight_code = true
