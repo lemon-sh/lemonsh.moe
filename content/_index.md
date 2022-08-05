@@ -19,12 +19,7 @@ Welcome to my work-in-progress personal website.
 * [karx](https://karx.xyz)
 * [ferexio](https://fx.vc-mp.eu)
 
-<figure>
-    <img src="/okayucat.png" alt="okayu">
-    <figcaption>
-        <a href="https://twitter.com/kinka0703/status/1236537300693028866">src</a>
-    </figcaption>
-</figure>
+{{ img(caption="[src](https://twitter.com/kinka0703/status/1236537300693028866)", src="/okayucat.png") }}
 
 This website was made with the [Zola](https://getzola.org) SSG and the source code is available [here](https://github.com/lemon-sh/lemonsh.moe).
 
