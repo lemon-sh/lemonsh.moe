@@ -2,7 +2,7 @@
 title="3 fun ways to (ab)use your school OneDrive storage"
 date=2022-08-29
 +++
-If you're a student (or a teacher) and your school/university has an Office 365 plan (e.g. for Microsoft Teams), you probably an Education Office 365 account, which comes with a whopping 1 TB (!) of OneDrive storage and you're probably not even using 1% of that capacity. Kinda wasteful in my opinion.
+If you're a student (or a teacher) and your school/university has an Office 365 plan (e.g. for Microsoft Teams), you probably have an Education Office 365 account, which comes with a whopping 1 TB (!) of OneDrive storage and you're probably not even using 1% of that capacity. Kinda wasteful in my opinion.
 
 But before I list a few fun examples of how you can make use of your school OneDrive, I need to address a few things:
 - Everything I talk about here should technically be possible with a Google Education account (or whatever it's called), although I have no experience with that, so YMMV.
