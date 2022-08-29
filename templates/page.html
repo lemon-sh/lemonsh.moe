@@ -4,8 +4,10 @@
 
 {% if page %}
 {{ page.content | safe }}
+{% if config.extra.comments %}
 <script src="https://giscus.app/client.js" data-repo="lemon-sh/lemonsh.moe" data-repo-id="R_kgDOGenHOg" data-category="Posts" data-category-id="DIC_kwDOGenHOs4CBSqT" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="transparent_dark" data-lang="en" crossorigin="anonymous" async>
 </script>
+{% endif %}
 {% elif section %}
 {{ section.content | safe }}
 {% endif %}

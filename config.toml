@@ -8,11 +8,12 @@ minify_html = true
 
 [markdown]
 highlight_code = true
-highlight_theme = "1337"
+highlight_theme = "ayu-dark"
 external_links_target_blank = true
 external_links_no_referrer = true
 
 [extra]
+comments = true
 nav = [
     { path = "/", label = "home" },
     { path = "/blog/", label = "blog" },
