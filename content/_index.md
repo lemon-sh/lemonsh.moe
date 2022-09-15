@@ -18,6 +18,7 @@ Welcome to my work-in-progress personal website.
 * [famfo](https://famfo.xyz)
 * [karx](https://karx.xyz)
 * [ferexio](https://fx.vc-mp.eu)
+* [polarian](https://polarian.dev)
 
 {{ img(caption="[src](https://twitter.com/kinka0703/status/1236537300693028866)", src="/okayucat.png") }}
 
