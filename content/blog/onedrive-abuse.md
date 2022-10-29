@@ -4,10 +4,10 @@ date=2022-08-29
 +++
 If you're a student (or a teacher) and your school/university has an Office 365 plan (e.g. for Microsoft Teams), you probably have an Education Office 365 account, which comes with a whopping 1 TB (!) of OneDrive storage and you're probably not even using 1% of that capacity. Kinda wasteful in my opinion.
 
-But before I list a few fun examples of how you can make use of your school OneDrive, I need to address a few things:
-- Everything I talk about here should technically be possible with a Google Education account (or whatever it's called), although I have no experience with that, so YMMV.
-- You probably are aware that the administrators of your school Office 365 suite do **not** have access to your files, but you should also know that they have the power to **reset your password** and gain access that way.
-- This should be obvious, but your account is **not** permanent - it will eventually be removed (e.g. when you finish school) and you need to be prepared for that.
+But before I list a few fun examples of how you can make use of your school OneDrive, I need to address a few - hopefully obvious - things:
+- Everything I talk about here should technically be possible with a Google Suite account (or whatever it's called), although I have no experience with that, so YMMV.
+- The administrators of your school Office 365 suite do **not** have access to your files, but you should also know that they have the power to **reset your password** and gain access that way.
+- Your account is **not** permanent - it will eventually be removed (e.g. when you finish school) and you need to be prepared for that.
 - The examples I'll be showing are not always the *best* solutions to a given problem, but they are definetely fun ones!
 
 With that out of the way, let's begin!
@@ -16,7 +16,7 @@ With that out of the way, let's begin!
 
 The examples I'll be covering involve the usage of `rclone` - a commandline application that allows you to easily access remote storages of various kinds.
 
-On Windows you can install it with `scoop`, on Linux it should be available in your distro's package manager.
+On Linux it should be available in your distro's package manager and on macOS, Homebrew has it. If you use Windows, ~~[follow this guide](https://wiki.archlinux.org/title/installation_guide)~~ you can install rclone with `scoop`, but the commands may be a bit different.
 
 After installation, run `rclone config` and add your OneDrive storage using the `onedrive` remote type - rclone should guide you through that. The rest of this post will assume that the name of the remote is `sch`, so always replace `sch` with *your* remote name if it's different.
 
@@ -116,7 +116,7 @@ Of course, you need to adapt this config according to your needs.
 ### Testing the proxy
 The `imgs` directory on your OneDrive should now be mapped to your domain's root. For example, in my case, `sch:imgs/image.png` is mapped to `https://imgs.lemonsh.moe/image.png`.
 
-### FAQ
+### NAQ (never asked questions)
 Now you might ask, why can't we just use `rclone link` for the images, just like we did with your media before? Well, there are a few reasons:
 - When your current OneDrive account is deleted, all links generated with `rclone link` will become invalid. With a proxy like this, you can migrate the images somewhere else.
 - As I've said before, links generated with `rclone link` are likely to contain your school name, which is not desired if you want to embed them on a website, for example.
@@ -125,17 +125,17 @@ Now you might ask, why can't we just use `rclone link` for the images, just like
 
 Another question you might have is, why images specifically? Why not music / videos / etc.?
 
-Well, you can technically host any kind of content with this proxy, but I just felt like image hosting is a good demo usecase. Larger files are going to be problematic because for every request, your server needs to use `2 * filesize` of bandwidth (download from OneDrive and then upload to the user), so caching may be unfeasible.
+Well, you can technically host any kind of content with this proxy, but I just felt like image hosting is a good demo usecase. Larger files are going to be problematic because for every request, your server needs to use `2 * filesize` of bandwidth (download from OneDrive and then upload to the user) and caching may be unfeasible.
 
 # #3: Storing personal data securely
 It's well-known that storing sensitive information in the cloud is a very bad idea, especially with non-private services like OneDrive or Google Drive, because these companies can access your data whenever they want - or when the government wants.
 
-But there's nothing encryption couldn't fix! We can use the `crypt` remote type:
+But, we can use the `crypt` remote type to mitigate this:
 
 > Rclone `crypt` remotes encrypt and decrypt other remotes.
 > A remote of type `crypt` does not access a storage system directly, but instead wraps another remote, which in turn accesses the storage system.
 
-Considering that we're working with sensitive data here, if you have trouble understanding something here, please [RTFM](https://rclone.org/crypt/) so that you don't commit a security fail. With that in mind, let's begin:
+Considering that we're working with sensitive data here, if you have trouble understanding something here, please [RTFM](https://rclone.org/crypt/). With that in mind, let's begin:
 
 ### Create an empty folder for the encrypted files
 ```sh
