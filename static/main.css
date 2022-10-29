@@ -65,46 +65,46 @@ blockquote {
 
 li {
     list-style-type: circle;
-    margin-bottom: 0.6em;
+    margin-bottom: 0.3em;
 }
 
 hr {
-    background-color: hsl(0, 0%, 25%);
-    height: 2px;
+    background-color: #888;
+    height: 1px;
     border: 0;
 }
 
 h1 {
+    line-height: 1em;
     margin-top: 1em;
     text-align: center;
 }
 
 h3 {
-    text-indent: 1em;
+    margin-left: 1em;
 }
 
 p, li {
+    line-height: 1.5em;
     text-align: justify;
     text-justify: inter-word;
 }
 
 body {
-    line-height: 1.5em;
     margin: 0 auto 2em auto;
     max-width: 60em;
     font-family: "Roboto Slab", sans-serif;
     color: hsl(0, 0%, 90%);
     padding: 0 5vw;
-    background: hsl(0, 0%, 6%) url("/bg.jpg") no-repeat center center fixed;
+    background: #111 url("/bg.jpg") no-repeat center center fixed;
     background-size: cover;
-    text-shadow: 0 0 0.3em #111;
 }
 
 /* title header */
 
 .title-header-outer {
     text-align: center;
-    margin: 2em 0;
+    margin: 2em 0 0;
 }
 
 .title-header-inner {
@@ -113,7 +113,7 @@ body {
 
 .title-header-inner p,
 .title-header-inner h1 {
-    margin: 0.2em 0;
+    margin: 0;
 }
 
 .title-header-inner p {
@@ -123,13 +123,11 @@ body {
 /* codeblocks */
 
 pre {
-    font-size: 0.9em;
-    padding: 1em;
+    padding: 0.8em;
     border-radius: 0.5em;
     overflow-x: auto;
     scrollbar-width: thin;
     line-height: 1.2em;
-    text-shadow: none;
 }
 
 pre::-webkit-scrollbar {
@@ -153,7 +151,7 @@ pre::-webkit-scrollbar-thumb:active {
 code {
     font-family: "JetBrains Mono", monospace;
     font-size: 14px;
-    letter-spacing: -0.05em;
+    letter-spacing: -1px;
     background-color: #151515;
     padding: 0 0.3em;
     border-radius: 0.4em;
@@ -210,8 +208,7 @@ table.etbl td {
 
 figure {
     display: table;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 1em auto;
     max-width: 35em;
 }
 

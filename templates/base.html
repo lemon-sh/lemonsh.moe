@@ -27,7 +27,7 @@
     </div>
     <p>/{% for navitem in config.extra.nav %}
         {% if section and section.path == navitem.path %}
-            <span style="color: #ccc; text-decoration: underline">{{ navitem.label }}</span>
+            <span style="color: #ccc;">{{ navitem.label }}</span>
         {% else %}
             <a href="{{ navitem.path }}">{{ navitem.label }}</a>
         {% endif %}/
