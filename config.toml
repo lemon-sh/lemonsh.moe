@@ -16,5 +16,6 @@ external_links_no_referrer = true
 comments = true
 nav = [
     { path = "/", label = "home" },
+    { path = "/projects/", label = "projects" },
     { path = "/blog/", label = "blog" },
 ]
