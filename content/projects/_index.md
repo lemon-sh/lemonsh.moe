@@ -27,7 +27,7 @@ Projects that I used to work on, but rarely do currently. These are either compl
 ### Toys
 Very small projects written out of boredom, or to prove a point.
 
-* [`sntp-yield`](https://git.lemonsh.moe/lemon/sntp-yield) (`Rust`) - Super accurate clock, thanks for Google's NTP service.
+* [`sntp-yield`](https://git.lemonsh.moe/lemon/sntp-yield) (`Rust`) - Super accurate clock, thanks to Google's NTP service.
 * [`defralloc`](https://git.lemonsh.moe/lemon/defralloc) (`C`) - Defragmenting memory "allocator". Don't even bother.
 * [`lemontimer`](https://gist.github.com/lemon-sh/512223b4c97bf61cf3fdb7c97283b2ef) (`x86 Assembly`) - Desktop clock for Windows. Written in ASM while waiting in an Overwatch DPS queue.
 * [`binshclock`](https://git.lemonsh.moe/lemon/binshclock) (`C`) - Desktop ***binary*** clock for Windows.
