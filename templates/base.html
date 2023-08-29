@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>{% if page %}{{ page.title }}{% elif section %}{{ section.title }}{% endif %} ~ lemonsh's website</title>
+    <link href="/main.css" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+</head>
+
+<body>
+    <header>
+        {% if page %}
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}
+                <p>{{ page.description }}</p>
+            {% elif page.date %}
+                <p>📅 {{ page.date }}&ensp; 🕑 {{ page.reading_time }}min</p>
+            {% endif %}
+        {% elif section %}
+            <h1>{{ section.title }}</h1>
+        {% endif %}
+    </header>
+    <nav>{% for navitem in config.extra.nav %}
+        {% if section and section.path == navitem.path %}
+            <navitem>{{ navitem.label }}</navitem>
+        {% else %}
+            <a href="{{ navitem.path }}"><navitem>{{ navitem.label }}</navitem></a>
+        {% endif %}
+    {% endfor %}</nav>
+    <hr>    
+    {% block content %} {% endblock %}
+    <hr>
+    <a href="#" class="footer">↑ top ↑</a>
+</body>
+
+</html>

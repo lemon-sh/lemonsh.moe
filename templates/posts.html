@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ section.content | safe }}
+<h2>{{ section.description }}</h2>
+<table class="etbl">
+    {% for cpage in paginator.pages %}
+    <tr>
+        <td>{{ cpage.date }}</td>
+        <td><a href="{{ cpage.permalink }}">{{ cpage.title }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<nav style="text-align: center">
+    <a href="{{ paginator.first }}">&lt;&lt;&nbsp;</a>
+    {% if paginator.previous %}
+    <a href="{{ paginator.previous }}">&lt;&nbsp;</a>
+    {% else %}
+    <a style="color: #aaaaaa">&lt;&nbsp;</a>
+    {% endif %}
+    {{ paginator.current_index }}
+    {% if paginator.next %}
+    <a href="{{ paginator.next }}">&nbsp;&gt;</a>
+    {% else %}
+    <a style="color: #aaaaaa">&nbsp;&gt;</a>
+    {% endif %}
+    <a href="{{ paginator.last }}">&nbsp;&gt;&gt;</a>
+</nav>
+{% endblock content %}

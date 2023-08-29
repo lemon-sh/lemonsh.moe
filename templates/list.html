@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ section.content | safe }}
+<ul>
+    {% for subsection in section.subsections %}
+    {% set csection = get_section(path=subsection) %}
+    <li>{{ csection.title }}
+        <ul>
+            {% for cpage in csection.pages %}
+            <li><a href="{{ cpage.permalink }}">{{ cpage.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
