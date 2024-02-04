@@ -10,7 +10,7 @@ I'm **lemonsh**, a random tech guy from Poland. I'm interested in \*nix operatin
 
 These days I mainly code in Rust, but I also know C, C#, Java, HTML/CSS, Bash, some x86 ASM, and a bit of JS. I'm currently learning Kotlin and planning to learn Go in the future. My first language was Python, but I don't use it anymore.
 
-I run Arch Linux on my laptop and PC, Alpine Linux on all of my servers. I co-maintain the [C4TG1RL5 (AS4242421411)](https://catgirls.lemonsh.moe) network on [dn42](https://dn42.us/) with [famfo](https://famfo.xyz).
+I run Arch Linux on my laptop and PC, Alpine Linux on all of my servers. I co-maintain the [C4TG1RL5 (AS4242421411)](https://catgirls.systems) network on [dn42](https://dn42.us/) with [famfo](https://famfo.xyz).
 
 Yes, I like anime. I know you didn't ask.
 
