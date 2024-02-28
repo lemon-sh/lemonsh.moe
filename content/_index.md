@@ -12,8 +12,6 @@ These days I mainly code in Rust, but I also know C, C#, Java, HTML/CSS, Bash, s
 
 I run Arch Linux on my laptop and PC, Alpine Linux on all of my servers. I co-maintain the [C4TG1RL5 (AS4242421411)](https://catgirls.systems) network on [dn42](https://dn42.us/) with [famfo](https://famfo.xyz).
 
-Yes, I like anime. I know you didn't ask.
-
 ## Find me on the Internet!
 * E-mail: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
 * XMPP: [lemon@lemonsh.moe](xmpp:lemon@lemonsh.moe)

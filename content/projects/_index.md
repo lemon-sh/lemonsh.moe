@@ -7,6 +7,8 @@ This list exists mainly for myself, so I can organize my projects better, but fe
 ### Regular projects
 Stuff I'm currently working on. (or planning to in near future)
 
+* [`spotk`](https://git.lemonsh.moe/lemon/spotk) (`Rust`) - CLI tool for retrieving song metadata from Spotify's API.
+* [`ovhsms`](https://git.lemonsh.moe/lemon/ovhsms) (`Rust`) - Library for sending SMS messages through OVH's http2sms API
 * [`qbin`](https://git.lemonsh.moe/lemon/qbin) (`Rust`) - Like [termbin.com](https://termbin.com/), but done my way.
 * [`dn42wiki-ng`](https://git.dn42.dev/wiki/wiki-ng) (`Zola`) - A rewrite of the original gollum dn42 wiki to Zola, for better performance and appearance.
 * [`uberbot`](https://git.lemonsh.moe/lemon/uberbot) (`Rust`) - IRC bot that does... I don't even know what anymore. Originally intended to replace the 6 bots on karx's IRC server with one bot.
@@ -16,7 +18,7 @@ Stuff I'm currently working on. (or planning to in near future)
 * [`dsuft`](https://git.lemonsh.moe/lemon/dsuft) (`C`) - Simple file transfer utility for *nix OSes.
 
 #### Discord abuse
-* [`chuncord`](https://git.lemonsh.moe/lemon/chuncord) (`Rust`) - Abuse Discord's 8MB limit by splitting the file in chunks.
+* [`chuncord`](https://git.lemonsh.moe/lemon/chuncord) (`Rust`) - Abuse Discord's 25MB upload limit by splitting the file in chunks.
 * [`ZDIMGUPMobile`](https://git.lemonsh.moe/lemon/ZDIMGUPMobile) (`Java`) - Android app that uploads files to Discord through a webhook and then gives you the direct hotlink. Originally intended for sending images in IRC channels.
 * [`windimgup`](https://git.lemonsh.moe/lemon/windimgup) (`C/C++`) - Win32 version of the above.
 * [`dimgup3`](https://git.lemonsh.moe/lemon/dimgup3) (`Rust`) - Web version of the above.
