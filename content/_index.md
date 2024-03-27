@@ -15,6 +15,7 @@ I run Arch Linux on my laptop and PC, Alpine Linux on all of my servers. I co-ma
 ## Find me on the Internet!
 * E-mail: [lemon@lemonsh.moe](mailto:lemon@lemonsh.moe)
 * XMPP: [lemon@lemonsh.moe](xmpp:lemon@lemonsh.moe)
+* Mastodon: <a rel="me" href="https://chaos.social/@lemonsh">@lemonsh@chaos.social</a>
 * Code: [@lemon](https://git.lemonsh.moe/lemon) at [git.lemonsh.moe](https://git.lemonsh.moe)
 * Discord: @lemonsh
 
