@@ -1,0 +1,214 @@
+@import url(highlight.css);
+
+@font-face {
+    font-family: 'DINish';
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url('/dinish-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'DINish';
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url('/dinish-italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'DINish';
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url('/dinish-bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Victor Mono';
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url('/victor-mono.woff2') format('woff2');
+}
+
+:root {
+    --font: "DINish", sans-serif;
+    --monospace-font: "Victor Mono", monospace;
+    --fg: #e6e6e6;
+    --fgmid: #aaa;
+    --fgdark: #444;
+    --bg: #111;
+    --accent1: #ff6a76;
+    --accent2: #b1ff62;
+    --transbg: rgba(0, 0, 0, 0.5);
+}
+
+blockquote {
+    color: var(--fgmid);
+    font-style: italic;
+    border-left: 0.3em solid var(--fgdark);
+    margin: 0;
+    padding-left: 1em;
+}
+
+li {
+    list-style-type: lower-greek;
+    margin-bottom: 0.3em;
+}
+
+hr {
+    background-color: var(--fgdark);
+    height: 1px;
+    border: 0;
+}
+
+h1 {
+    line-height: 1em;
+    margin: 1em 0 0;
+    text-align: center;
+}
+
+header p {
+    text-align: center;
+    color: var(--fgmid);
+    margin-top: 0.4rem;
+}
+
+p, li {
+    line-height: 1.5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0 auto 2em auto;
+    max-width: 60em;
+    font-family: var(--font);
+    font-size: 1.2rem;
+    color: var(--fg);
+    padding: 0 5vw;
+    background: var(--bg) url("/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+}
+
+navitem {
+    padding: 0.2em 0.8em 0.8ex 0.8em;
+    background-color: var(--transbg);
+    margin-right: 0.5em;
+    border-radius: 0.5em;
+    display: block;
+}
+
+pre {
+    padding: 0.8rem;
+    border-radius: 0.5em;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    line-height: 1.2em;
+}
+
+pre::-webkit-scrollbar {
+    background: transparent;
+    height: 0.4em;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: hsl(218, 23%, 20%);
+    border-radius: 0.2em;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+    background: var(--accent2);
+}
+
+pre::-webkit-scrollbar-thumb:active {
+    background: var(--accent1);
+}
+
+code {
+    font-family: var(--monospace-font);
+    background-color: var(--transbg);
+    font-size: 1rem;
+    padding: 0.2em 0.4em;
+    border-radius: 0.5em;
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.footer {
+    display: block;
+    text-align: center;
+}
+
+a:link,
+a:active,
+a:visited {
+    color: var(--accent1);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent2);
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 1em auto;
+}
+
+thead {
+    text-align: center;
+}
+
+td {
+    border: 1px solid var(--fgdark);
+    padding: 0.3em;
+}
+
+table.etbl td {
+    border: none;
+}
+
+figure {
+    display: table;
+    margin: 1em auto;
+    max-width: 35em;
+}
+
+figure>img {
+    max-width: 100%;
+    border-radius: 0.5em;
+}
+
+figcaption {
+    text-align: right;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--fgmid);
+}
+
+figcaption>a:link,
+figcaption>a:active,
+figcaption>a:visited {
+    color: var(--fgmid);
+}
+
+figcaption>a:hover {
+    color: var(--fg);
+}
