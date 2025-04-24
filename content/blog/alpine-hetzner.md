@@ -6,8 +6,6 @@ Recently, I've gotten myself one of those ARM VPSes from [Hetzner](https://www.h
 
 I was disappointed to see that Alpine Linux is not on the list of available ISOs, though. That kinda shocked me, as I was accustomed to the ***insane*** amount of ISO choice Hetzner normally provides with their x86 servers.
 
-{{ img(caption="Thomas has never seen such bullsh*t before!",src="https://i.kym-cdn.com/photos/images/original/001/566/301/bb8.png") }}
-
 ## I will not tolerate this.
 
 ### Rescue mode

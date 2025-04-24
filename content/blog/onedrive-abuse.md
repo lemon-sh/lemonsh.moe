@@ -170,4 +170,3 @@ In order to backup or migrate all your rclone remotes (including `crypt` if you 
 The path to the config is `~/.config/rclone/rclone.conf`.
 
 # The end.
-~~microsoft please don't arrest me, it's all for educational purposes~~

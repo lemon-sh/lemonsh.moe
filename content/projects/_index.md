@@ -2,20 +2,18 @@
 title = "Projects"
 template = "page.html"
 +++
-This list exists mainly for myself, so I can organize my projects better, but feel free to check it out if you're interested in what I do.
 
 ### Regular projects
-Stuff I'm currently working on. (or planning to in near future)
+Stuff that I have finished and projects I'm currently working on (or planning to in the near future).
 
-* [`spotk`](https://git.lemonsh.moe/lemon/spotk) (`Rust`) - CLI tool for retrieving song metadata from Spotify's API.
-* [`ovhsms`](https://git.lemonsh.moe/lemon/ovhsms) (`Rust`) - Library for sending SMS messages through OVH's http2sms API
+* [`mumble-asterisk-bridge`](https://git.lemonsh.moe/lemon/mumble-asterisk-bridge) (`Rust`) - Bridges [Asterisk PBX](https://www.asterisk.org/) channels with [Mumble](https://www.mumble.info/) voice channels, allowing for interesting setups, like calling into Mumble voice channels from landline phones.
+* [`ovhsms`](https://git.lemonsh.moe/lemon/ovhsms) (`Rust`) - Library for sending SMS messages through OVH's http2sms API.
 * [`qbin`](https://git.lemonsh.moe/lemon/qbin) (`Rust`) - Like [termbin.com](https://termbin.com/), but done my way.
 * [`dn42wiki-ng`](https://git.dn42.dev/wiki/wiki-ng) (`Zola`) - A rewrite of the original gollum dn42 wiki to Zola, for better performance and appearance.
 * [`uberbot`](https://git.lemonsh.moe/lemon/uberbot) (`Rust`) - IRC bot that does... I don't even know what anymore. Originally intended to replace the 6 bots on karx's IRC server with one bot.
 * [`SMSBot`](https://git.lemonsh.moe/lemon/SMSBot) (`Java`) - Android command chatbot (kinda like Discord bots) that works over SMS.
-* [`algcalc`](https://git.lemonsh.moe/lemon/algcalc) (`C/C++`) - The firmware for a "gaming calculator" that I've built with my friend from school.
+* [`algcalc`](https://git.lemonsh.moe/lemon/algcalc) (`C/C++`) - The firmware for a "gaming calculator" that I've built with my school friend.
 * [`IRCrarria`](https://github.com/lemon-sh/IRCrarria) (`C#`) - IRC bridge for Terraria (TShock plugin).
-* [`dsuft`](https://git.lemonsh.moe/lemon/dsuft) (`C`) - Simple file transfer utility for *nix OSes.
 
 #### Discord abuse
 * [`chuncord`](https://git.lemonsh.moe/lemon/chuncord) (`Rust`) - Abuse Discord's 25MB upload limit by splitting the file in chunks.
@@ -35,5 +33,7 @@ Very small projects written out of boredom, or to prove a point.
 ### R.I.P
 Stuff that's not functional and not developed anymore (most likely because interest has been lost).
 
+* [`spotk`](https://git.lemonsh.moe/lemon/spotk) (`Rust`) - CLI tool for retrieving song metadata from Spotify's API. The project unfortunately died due to anti-competitive API changes introduced by Spotify.
 * [`uonet-rs`](https://git.lemonsh.moe/lemon/uonet-rs) (`Rust`) - Library for interacting with my school's e-journal app.
 * [`vidns`](https://git.lemonsh.moe/lemon/vidns) (`Rust`) - PowerDNS Frontend for use in small networks to allow users to create their own domains and manage their DNS records.
+* [`dsuft`](https://git.lemonsh.moe/lemon/dsuft) (`C`) - Simple file transfer utility for *nix OSes.
